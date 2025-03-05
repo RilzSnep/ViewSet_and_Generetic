@@ -80,15 +80,15 @@ celerybeat-schedule
 
 # dotenv
 .env
-
+.idea
 # virtualenv
-venv/
+
 ENV/
 
-# Spyder project settings
+# Spyder config settings
 .spyderproject
 
-# Rope project settings
+# Rope config settings
 .ropeproject
 ### VirtualEnv template
 # Virtualenv
@@ -152,7 +152,7 @@ cmake-build-*/
 # Mongo Explorer plugin
 .idea/**/mongoSettings.xml
 
-# File-based project format
+# File-based config format
 *.iws
 .idea/
 .idea

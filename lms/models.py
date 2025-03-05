@@ -1,6 +1,5 @@
 from django.db import models
 
-
 class Course(models.Model):
     title = models.CharField(max_length=200, verbose_name='Название')
     preview = models.ImageField(upload_to='previews/courses/', blank=True, null=True, verbose_name='Превью')
@@ -12,7 +11,6 @@ class Course(models.Model):
 
     def __str__(self):
         return self.title
-
 
 class Lesson(models.Model):
     title = models.CharField(max_length=200, verbose_name='Название')
