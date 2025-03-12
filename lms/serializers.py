@@ -1,21 +1,34 @@
+# lms/serializers.py
 from rest_framework import serializers
-from .models import Course, Lesson
-
+from .models import Course, Lesson, Subscription
+from .validators import validate_youtube_url
 
 class LessonSerializer(serializers.ModelSerializer):
+    video_url = serializers.CharField(max_length=200, validators=[validate_youtube_url], allow_blank=True, required=False)
+
     class Meta:
         model = Lesson
-        fields = ['id', 'title', 'description', 'preview', 'video_url', 'course']  # Можно настроить под ваши нужды
+        fields = ['id', 'title', 'description', 'preview', 'video_url', 'course']
 
+    def validate(self, data):
+        # Проверяем только при создании или обновлении
+        if self.context.get('view').action in ['create', 'update', 'partial_update']:
+            if 'video_url' in data and data['video_url']:
+                validate_youtube_url(data['video_url'])
+        return data
 
 class CourseSerializer(serializers.ModelSerializer):
-    lesson_count = serializers.SerializerMethodField()  # Оставляем поле количества уроков
-    lessons = LessonSerializer(many=True, read_only=True)  # Добавляем поле со списком уроков
+    lesson_count = serializers.SerializerMethodField()
+    lessons = LessonSerializer(many=True, read_only=True)
+    is_subscribed = serializers.SerializerMethodField()
 
     class Meta:
         model = Course
-        fields = ['id', 'title', 'preview', 'description', 'lesson_count', 'lessons']
+        fields = ['id', 'title', 'preview', 'description', 'lesson_count', 'lessons', 'is_subscribed']
 
     def get_lesson_count(self, obj):
-        # Метод для вычисления количества уроков
         return obj.lessons.count()
+
+    def get_is_subscribed(self, obj):
+        user = self.context['request'].user
+        return Subscription.objects.filter(user=user, course=obj).exists()
