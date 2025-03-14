@@ -25,7 +25,7 @@ INSTALLED_APPS = [
     'lms',
     'django_filters',
     "rest_framework_simplejwt",
-
+    'drf_yasg',
 ]
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
@@ -64,12 +64,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "config.wsgi.application"
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
@@ -128,3 +123,5 @@ LOGGING = {
         },
     },
 }
+
+STRIPE_SECRET_KEY = 'sk_test_51R2ZDV2aIs5U5nqyLNCVtkxF4or6WToETRDWIqAzxJ63FiqpqNX7wG4MrRCI7pik3tcnfHZD7EZAdZchriRVCAxN001hT7BLpw'
