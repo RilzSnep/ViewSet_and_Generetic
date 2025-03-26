@@ -9,6 +9,14 @@ from .paginators import CustomPagination
 from .serializers import CourseSerializer, LessonSerializer
 from .services import create_stripe_price, create_stripe_product, create_stripe_checkout_session, check_stripe_session
 
+import logging
+
+logger = logging.getLogger(__name__)
+
+# lms/views.py
+from .tasks import debug_task, send_course_update_email
+
+
 
 class SubscriptionToggleAPIView(APIView):
     permission_classes = [IsAuthenticated]
@@ -34,19 +42,28 @@ class SubscriptionToggleAPIView(APIView):
 class CourseViewSet(viewsets.ModelViewSet):
     queryset = Course.objects.all()
     serializer_class = CourseSerializer
-    pagination_class = CustomPagination
+    permission_classes = [IsAuthenticated]
 
-    def get_permissions(self):
-        if self.action in ['create', 'destroy']:
-            self.permission_classes = [IsAuthenticated, ~IsModerator]
-        elif self.action in ['update', 'partial_update', 'retrieve']:
-            self.permission_classes = [IsAuthenticated, IsOwnerOrModerator]
-        else:
-            self.permission_classes = [IsAuthenticated]
-        return [permission() for permission in self.permission_classes]
+    def perform_update(self, serializer):
+        course = serializer.save()
+        subscriptions = Subscription.objects.filter(course=course)
+        for subscription in subscriptions:
+            send_course_update_email.delay(
+                course_title=course.title,
+                subscriber_email=subscription.user.email
+            )
 
-    def perform_create(self, serializer):
-        serializer.save(owner=self.request.user)
+    def update(self, request, *args, **kwargs):
+        instance = self.get_object()
+        serializer = self.get_serializer(instance, data=request.data, partial=True)
+        serializer.is_valid(raise_exception=True)
+        self.perform_update(serializer)
+        # Отправка задачи для всех подписчиков
+        print(f"Обновление курса {instance.title}, подписчики: {instance.subscribers.all()}")
+        for subscriber in instance.subscribers.all():
+            print(f"Отправка задачи для {subscriber.email}")
+            send_course_update_email.delay(course_title=instance.title, subscriber_email=subscriber.email)
+        return Response(serializer.data)
 
 
 class LessonViewSet(viewsets.ModelViewSet):
@@ -67,24 +84,13 @@ class LessonViewSet(viewsets.ModelViewSet):
         serializer.save(owner=self.request.user)
 
 
-import logging
-
-logger = logging.getLogger(__name__)
-
-
 class CreatePaymentAPIView(APIView):
     permission_classes = [IsAuthenticated]
 
     def post(self, request, *args, **kwargs):
-        logger.info("Запрос получен в CreatePaymentAPIView")
-        logger.info(f"Данные запроса: {request.data}")
-
         user = request.user
         course_id = request.data.get('course_id')
-        logger.info(f"Course ID: {course_id}")
-
         course = get_object_or_404(Course, id=course_id)
-        logger.info(f"Курс найден: {course.title}")
 
         if course.price <= 0:
             return Response({"error": "Цена курса должна быть больше 0"}, status=400)
@@ -101,7 +107,8 @@ class CreatePaymentAPIView(APIView):
             payment_url=session.url,
         )
 
-        logger.info(f"Создан платёж: ID={payment.id}, URL={payment.payment_url}")
+        # Запускаю задачу асинхронно
+        debug_task.delay()
 
         return Response({
             'payment_url': payment.payment_url,
