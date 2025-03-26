@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="da39b02f-e440-4612-a7fc-77893afea6f4" name="Changes" comment="hw 32.2">
+      <change afterPath="$PROJECT_DIR$/.idea/ViewSet_and_Generetic.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/config/celery.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lms/tasks.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.env_example" beforeDir="false" afterPath="$PROJECT_DIR$/.env_example" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/config/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/config/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lms/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/lms/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lms/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/lms/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/users/admin.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/users/models.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;RilzSnep&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/RilzSnep/ViewSet_and_Generetic.git&quot;,
+    &quot;accountId&quot;: &quot;f4a0a59c-2f4c-4b22-884b-3187afcdbaeb&quot;
+  }
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 7
+}</component>
+  <component name="ProjectId" id="2td4YhRjoSeQKNankZOWaBF6FpA" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Python tests.Python tests for lms.tests.LessonAndSubscriptionTests.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Python tests for lms.tests.LessonAndSubscriptionTests.test_access_control.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Python tests for lms.tests.LessonAndSubscriptionTests.test_lesson_crud.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Python tests for lms.tests.LessonAndSubscriptionTests.test_subscription_toggle.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;#1 on dev&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Student\PycharmProjects\ViewSet_and_Generetic" />
+      <recent name="C:\Users\Student\PycharmProjects\ViewSet_and_Generetic\project" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Python tests.Python tests for lms.tests.LessonAndSubscriptionTests.test_access_control">
+    <configuration name="Python tests for lms.tests.LessonAndSubscriptionTests" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
+      <module name="ViewSet_and_Generetic" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;lms.tests.LessonAndSubscriptionTests&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Python tests for lms.tests.LessonAndSubscriptionTests.test_access_control" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
+      <module name="ViewSet_and_Generetic" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;lms.tests.LessonAndSubscriptionTests.test_access_control&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Python tests for lms.tests.LessonAndSubscriptionTests.test_lesson_crud" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
+      <module name="ViewSet_and_Generetic" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;lms.tests.LessonAndSubscriptionTests.test_lesson_crud&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Python tests for lms.tests.LessonAndSubscriptionTests.test_subscription_toggle" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
+      <module name="ViewSet_and_Generetic" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;lms.tests.LessonAndSubscriptionTests.test_subscription_toggle&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python tests.Python tests for lms.tests.LessonAndSubscriptionTests.test_access_control" />
+        <item itemvalue="Python tests.Python tests for lms.tests.LessonAndSubscriptionTests.test_subscription_toggle" />
+        <item itemvalue="Python tests.Python tests for lms.tests.LessonAndSubscriptionTests.test_lesson_crud" />
+        <item itemvalue="Python tests.Python tests for lms.tests.LessonAndSubscriptionTests" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-python-sdk-5b207ade9991-746f403e7f0c-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-241.17890.14" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="da39b02f-e440-4612-a7fc-77893afea6f4" name="Changes" comment="" />
+      <created>1740668666486</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1740668666486</updated>
+    </task>
+    <task id="LOCAL-00001" summary="initial commit">
+      <option name="closed" value="true" />
+      <created>1740668739832</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1740668739832</updated>
+    </task>
+    <task id="LOCAL-00002" summary="hw viewSet and Generic">
+      <option name="closed" value="true" />
+      <created>1740670107553</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1740670107553</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Serializers hw">
+      <option name="closed" value="true" />
+      <created>1741176942173</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1741176942173</updated>
+    </task>
+    <task id="LOCAL-00004" summary="hw drf">
+      <option name="closed" value="true" />
+      <created>1741340115389</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1741340115389</updated>
+    </task>
+    <task id="LOCAL-00005" summary="hw 32.1 &#10;Валидаторы, пагинация и тесты">
+      <option name="closed" value="true" />
+      <created>1741779286859</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1741779286859</updated>
+    </task>
+    <task id="LOCAL-00006" summary="hw 32.1 &#10;добавил зависимости">
+      <option name="closed" value="true" />
+      <created>1741849355195</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1741849355195</updated>
+    </task>
+    <task id="LOCAL-00007" summary="hw 32.2">
+      <option name="closed" value="true" />
+      <created>1741971267414</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1741971267414</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
+    <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="initial commit" />
+    <MESSAGE value="hw viewSet and Generic" />
+    <MESSAGE value="Serializers hw" />
+    <MESSAGE value="hw drf" />
+    <MESSAGE value="hw 32.1 &#10;Валидаторы, пагинация и тесты" />
+    <MESSAGE value="hw 32.1 &#10;добавил зависимости" />
+    <MESSAGE value="hw 32.2" />
+    <option name="LAST_COMMIT_MESSAGE" value="hw 32.2" />
+  </component>
+</project>

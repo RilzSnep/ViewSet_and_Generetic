@@ -1,29 +1,22 @@
-# lms/models.py
 from django.db import models
-
-
-# from django.contrib.auth import get_user_model  # Убираем
-
-# User = get_user_model()  # Убираем
 
 class Course(models.Model):
     title = models.CharField(max_length=255)
-    preview = models.ImageField(upload_to='course_previews/', blank=True, null=True)
+    preview = models.ImageField(upload_to='previews/courses/', null=True, blank=True)
     description = models.TextField()
-    owner = models.ForeignKey('users.User', on_delete=models.CASCADE, related_name='courses')
-    price = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+    # Используем строку вместо get_user_model()
+    subscribers = models.ManyToManyField('users.User', related_name='subscribed_courses', blank=True)
 
     def __str__(self):
         return self.title
 
-
 class Lesson(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField()
-    preview = models.ImageField(upload_to='lesson_previews/', blank=True, null=True)
-    video_url = models.URLField(blank=True, null=True)
+    preview = models.ImageField(upload_to='previews/lessons/', null=True, blank=True)
+    video_url = models.CharField(max_length=200)
     course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='lessons')
-    owner = models.ForeignKey('users.User', on_delete=models.CASCADE, related_name='lessons')
 
     def __str__(self):
         return self.title
@@ -32,6 +25,8 @@ class Lesson(models.Model):
 class Subscription(models.Model):
     user = models.ForeignKey('users.User', on_delete=models.CASCADE, related_name='subscriptions')
     course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='subscriptions')
+    created_at = models.DateTimeField(auto_now_add=True)
+
 
     class Meta:
         unique_together = ['user', 'course']
@@ -39,7 +34,7 @@ class Subscription(models.Model):
         verbose_name_plural = 'Подписки'
 
     def __str__(self):
-        return f"{self.user.email} -> {self.course.title}"
+        return f"{self.user.email} subscribed to {self.course.title}"
 
 
 
