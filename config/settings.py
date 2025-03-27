@@ -28,6 +28,7 @@ INSTALLED_APPS = [
     'django_filters',
     "rest_framework_simplejwt",
     'drf_yasg',
+    "django_celery_beat",
 ]
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
@@ -126,34 +127,32 @@ LOGGING = {
     },
 }
 
-STRIPE_SECRET_KEY = 'sk_test_51R2ZDV2aIs5U5nqyLNCVtkxF4or6WToETRDWIqAzxJ63FiqpqNX7wG4MrRCI7pik3tcnfHZD7EZAdZchriRVCAxN001hT7BLpw'
+STRIPE_SECRET_KEY = os.getenv("STRIPE_SECRET_KEY")
 
 REDIS_HOST = os.getenv('REDIS_HOST', 'localhost')
 REDIS_PORT = os.getenv('REDIS_PORT', 6379)
 REDIS_DB = os.getenv('REDIS_DB', 0)
 
 # Настройки Celery
-CELERY_BROKER_URL = f'redis://{REDIS_HOST}:{REDIS_PORT}/{REDIS_DB}'
-CELERY_RESULT_BACKEND = f'redis://{REDIS_HOST}:{REDIS_PORT}/{REDIS_DB}'
+CELERY_BROKER_URL = 'redis://localhost:6379/0'
+CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
 CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TIMEZONE = 'UTC'
 
 CELERY_BEAT_SCHEDULE = {
-    'debug-task-every-30-seconds': {
-        'task': 'lms.tasks.debug_task',
-        'schedule': 30.0,
-    },
-    'block-inactive-users-daily': {
-        'task': 'lms.tasks.block_inactive_users',
-        'schedule': crontab(hour=0, minute=0),  # Каждый день в 00:00 UTC
+    'update-user-activity-status-every-10-minutes': {
+        'task': 'lms.tasks.update_user_activity_status',  # Путь к задаче
+        'schedule': crontab(minute='*/10'),  # Выполнять каждые 10 минут
     },
 }
+
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.yandex.ru'
 EMAIL_PORT = 465
-EMAIL_USE_TLS = True
+EMAIL_USE_SSL = True
+EMAIL_USE_TLS = False
 EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
