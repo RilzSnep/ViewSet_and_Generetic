@@ -1,13 +1,10 @@
-# lms/tests.py
 from rest_framework.test import APITestCase, APIClient
 from rest_framework import status
 from users.models import User
 from .models import Course, Lesson, Subscription
 import json
 
-
 class LessonAndSubscriptionTests(APITestCase):
-    # lms/tests.py
     def setUp(self):
         self.client = APIClient()
 
@@ -15,14 +12,12 @@ class LessonAndSubscriptionTests(APITestCase):
         self.user1 = User.objects.create_user(email='user1@example.com', password='pass123')
         self.user2 = User.objects.create_user(email='user2@example.com', password='pass123')
 
-        # Убеждаюсь, что user1 не модератор
-        self.user1.groups.clear()  # Очищаю группы
+        # Очищаю группы
+        self.user1.groups.clear()
         self.user2.groups.clear()
 
-        # Создаю курс
-        self.course = Course.objects.create(title='Test Course', description='Test Desc', owner=self.user1)
-
-        # Создаю урок
+        # Создаю курс и урок
+        self.course = Course.objects.create(title='Test Course', description='Test Desc', owner=self.user1, price=10.00)
         self.lesson = Lesson.objects.create(
             title='Test Lesson',
             description='Test Desc',
@@ -31,8 +26,12 @@ class LessonAndSubscriptionTests(APITestCase):
             owner=self.user1
         )
 
+        # Получаю токен для user1
+        response = self.client.post('/api/token/', {'email': 'user1@example.com', 'password': 'pass123'})
+        self.token = response.data['access']
+
     def test_lesson_crud(self):
-        self.client.force_authenticate(user=self.user1)
+        self.client.credentials(HTTP_AUTHORIZATION='Bearer ' + self.token)
 
         # Тест создания урока
         data = {
@@ -48,7 +47,7 @@ class LessonAndSubscriptionTests(APITestCase):
         response = self.client.get(f'/api/lessons/{self.lesson.id}/')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
-        # Тест обновления урока (передаю все поля)
+        # Тест обновления урока
         update_data = {
             'title': 'Updated Lesson',
             'description': 'Updated Desc',
@@ -64,8 +63,7 @@ class LessonAndSubscriptionTests(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
 
     def test_subscription_toggle(self):
-        # Аутентифицирую первого пользователя
-        self.client.force_authenticate(user=self.user1)
+        self.client.credentials(HTTP_AUTHORIZATION='Bearer ' + self.token)
 
         # Тест добавления подписки
         response = self.client.post('/api/subscription/', data=json.dumps({'course_id': self.course.id}),
@@ -80,8 +78,9 @@ class LessonAndSubscriptionTests(APITestCase):
         self.assertEqual(response.data['message'], 'Подписка удалена')
 
     def test_access_control(self):
-        # Проверяю доступ для другого пользователя
-        self.client.force_authenticate(user=self.user2)
+        # Аутентифицируем второго пользователя
+        response = self.client.post('/api/token/', {'email': 'user2@example.com', 'password': 'pass123'})
+        self.client.credentials(HTTP_AUTHORIZATION='Bearer ' + response.data['access'])
 
         # Попытка обновления урока другого пользователя
         update_data = {'title': 'Unauthorized Update'}

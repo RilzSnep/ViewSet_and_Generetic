@@ -6,7 +6,7 @@ services:
     ports:
       - "8000:8000"
     volumes:
-      - .:/appЦ
+      - .:/app
     depends_on:
       - db
       - redis

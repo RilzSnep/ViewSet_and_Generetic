@@ -17,23 +17,20 @@ logger = logging.getLogger(__name__)
 from .tasks import debug_task, send_course_update_email
 
 
-
 class SubscriptionToggleAPIView(APIView):
     permission_classes = [IsAuthenticated]
 
     def post(self, request, *args, **kwargs):
         user = request.user
-        course_id = request.data.get('course_id')  # Получаем id курса из тела запроса
+        course_id = request.data.get('course_id')
         course = get_object_or_404(Course, id=course_id)
 
-        # Проверяем, есть ли подписка
         subs_item = Subscription.objects.filter(user=user, course=course)
-
         if subs_item.exists():
-            subs_item.delete()  # Удаляем подписку
+            subs_item.delete()
             message = 'Подписка удалена'
         else:
-            Subscription.objects.create(user=user, course=course)  # Создаём подписку
+            Subscription.objects.create(user=user, course=course)
             message = 'Подписка добавлена'
 
         return Response({"message": message})
@@ -58,7 +55,6 @@ class CourseViewSet(viewsets.ModelViewSet):
         serializer = self.get_serializer(instance, data=request.data, partial=True)
         serializer.is_valid(raise_exception=True)
         self.perform_update(serializer)
-        # Отправка задачи для всех подписчиков
         print(f"Обновление курса {instance.title}, подписчики: {instance.subscribers.all()}")
         for subscriber in instance.subscribers.all():
             print(f"Отправка задачи для {subscriber.email}")
@@ -75,12 +71,15 @@ class LessonViewSet(viewsets.ModelViewSet):
         if self.action in ['create']:
             self.permission_classes = [IsAuthenticated, ~IsModerator]
         elif self.action in ['destroy', 'update', 'partial_update', 'retrieve']:
-            self.permission_classes = [IsAuthenticated, IsOwnerOrModerator]  # Исправляем права
+            self.permission_classes = [IsAuthenticated, IsOwnerOrModerator]
         else:
             self.permission_classes = [IsAuthenticated]
         return [permission() for permission in self.permission_classes]
 
     def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)
+
+    def perform_update(self, serializer):
         serializer.save(owner=self.request.user)
 
 
