@@ -1,4 +1,3 @@
-# lms/serializers.py
 from rest_framework import serializers
 from .models import Course, Lesson, Subscription
 from .validators import validate_youtube_url
@@ -8,10 +7,9 @@ class LessonSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Lesson
-        fields = ['id', 'title', 'description', 'preview', 'video_url', 'course']
+        fields = ['id', 'title', 'description', 'video_url', 'course']
 
     def validate(self, data):
-        # Проверяем только при создании или обновлении
         if self.context.get('view').action in ['create', 'update', 'partial_update']:
             if 'video_url' in data and data['video_url']:
                 validate_youtube_url(data['video_url'])
