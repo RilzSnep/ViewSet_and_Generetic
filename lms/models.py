@@ -5,19 +5,16 @@ class Course(models.Model):
     preview = models.ImageField(upload_to='previews/courses/', null=True, blank=True)
     description = models.TextField()
     price = models.DecimalField(max_digits=10, decimal_places=2)
-    # Используем строку вместо get_user_model()
     subscribers = models.ManyToManyField('users.User', related_name='subscribed_courses', blank=True)
+    owner = models.ForeignKey('users.User', on_delete=models.CASCADE, related_name='courses')
 
     def __str__(self):
         return self.title
-
 class Lesson(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField()
-    preview = models.ImageField(upload_to='previews/lessons/', null=True, blank=True)
-    video_url = models.CharField(max_length=200)
+    video_url = models.URLField()
     course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='lessons')
-
     def __str__(self):
         return self.title
 
