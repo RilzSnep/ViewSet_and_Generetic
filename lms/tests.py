@@ -21,11 +21,10 @@ class LessonAndSubscriptionTests(APITestCase):
         # Создаю курс и урок
         self.course = Course.objects.create(title='Test Course', description='Test Desc', owner=self.user1, price=10.00)
         self.lesson = Lesson.objects.create(
-            title='Test Lesson',
-            description='Test Desc',
-            video_url='http://example.com/video',
-            course=self.course
-        )
+   	    title='Test Lesson',
+    	    description='Test Desc',
+    	    video_url='https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+    	    course=self.course)
         self.client = APIClient()
         refresh = RefreshToken.for_user(self.user1)
         self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {refresh.access_token}')
