@@ -3,8 +3,7 @@ from django.http import HttpResponse
 from django.urls import path, include
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from rest_framework.routers import DefaultRouter
-from lms.views import CourseViewSet, LessonViewSet, SubscriptionToggleAPIView, CreatePaymentAPIView, \
-    CheckPaymentStatusAPIView
+from lms.views import CourseViewSet, LessonViewSet, SubscriptionToggleAPIView, CreatePaymentAPIView, SubscriptionView,CheckPaymentStatusAPIView
 from users.views import UserViewSet, UserRegisterAPIView, UserDetailAPIView
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
@@ -50,5 +49,6 @@ urlpatterns = [
     path('api/payment/create/', CreatePaymentAPIView.as_view(), name='create_payment'),
     path('success/', success_view, name='success'),
     path('cancel/', cancel_view, name='cancel'),
+    path('api/subscribe/<int:course_id>/', SubscriptionView.as_view(), name='subscribe'),
     path('api/payment/<int:payment_id>/status/', CheckPaymentStatusAPIView.as_view(), name='check_payment_status'),
 ]

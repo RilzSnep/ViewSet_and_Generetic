@@ -87,3 +87,13 @@
 - Проверьте, что зависимости между сервисами работают (например, бэкенд не стартует, пока `db` и `redis` не готовы).
 
 Если у вас есть ещё вопросы или что-то нужно доработать, дайте знать!
+
+
+# ViewSet and Generetic
+
+## Настройка удалённого сервера
+
+1. Установите зависимости:
+   ```bash
+   sudo apt update
+   sudo apt install python3-pip python3-dev libpq-dev postgresql postgresql-contrib nginx gunicorn
