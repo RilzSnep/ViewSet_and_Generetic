@@ -67,17 +67,18 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'config.wsgi.application'
-DATABASE_URL = os.environ.get('DATABASE_URL', 'postgresql://postgres:password@localhost:5432/test_db')
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'viewset_and_generic_db',
-        'USER': 'postgres',
-        'PASSWORD': '123456',
-        'HOST': 'localhost',
-        'PORT': '5432',
-    }
-}
+DATABASE_URL = os.environ.get('DATABASE_URL', 'postgresql://postgres:123456@localhost:5432/viewset_and_generic_db')
+DATABASES = {'default': dj_database_url.config(default=DATABASE_URL)}
+#DATABASES = {
+#    'default': {
+#        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#        'NAME': 'viewset_and_generic_db',
+#        'USER': 'postgres',
+#        'PASSWORD': '123456',
+#        'HOST': 'localhost',
+#        'PORT': '5432',
+#    }
+#}
 AUTH_PASSWORD_VALIDATORS = [
     {
         "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
