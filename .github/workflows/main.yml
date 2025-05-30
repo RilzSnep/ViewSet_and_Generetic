@@ -12,41 +12,61 @@ jobs:
   test:
     runs-on: ubuntu-latest
 
-    services:
-      postgres:
-        image: postgres:13
-        env:
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: 123456  # Изменено с "password" на "123456"
-          POSTGRES_DB: viewset_and_generic_db
-        ports:
-          - 5432:5432
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.12'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        pip install psycopg2-binary
+
+    - name: Set up PostgreSQL
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y postgresql-client
+        sudo systemctl start postgresql.service
+        sudo -u postgres psql -c "CREATE DATABASE viewset_and_generic_db;"
+        sudo -u postgres psql -c "CREATE USER runner WITH PASSWORD 'password';"
+        sudo -u postgres psql -c "GRANT ALL PRIVILEGES ON DATABASE viewset_and_generic_db TO runner;"
+
+    - name: Run migrations
+      run: |
+        export DATABASE_URL=postgresql://runner:password@localhost:5432/viewset_and_generic_db
+        python manage.py migrate
+
+    - name: Run tests
+      run: |
+        export DATABASE_URL=postgresql://runner:password@localhost:5432/viewset_and_generic_db
+        python manage.py test
+      env:
+        SECRET_KEY: "django-insecure-tk&s$q=m7e=w=6=e-smxixln105ih-43edxf+02$ob665%y2dn"
+        DEBUG: "True"
+
+  deploy:
+    needs: test
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/dev' && github.event_name == 'push'
 
     steps:
-      - uses: actions/checkout@v3
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.12'
-
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
+    - name: Deploy to Server
+      uses: appleboy/ssh-action@master
+      with:
+        host: 158.160.182.94
+        username: rilzsnep
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        port: 22
+        script: |
+          cd /var/www/ViewSet_and_Generetic
+          git pull origin dev
+          source venv/bin/activate
           pip install -r requirements.txt
-
-      - name: Run migrations
-        env:
-          DATABASE_URL: postgresql://postgres:123456@localhost:5432/viewset_and_generic_db
-        run: |
           python manage.py migrate
-
-      - name: Run tests
-        env:
-          DATABASE_URL: postgresql://postgres:123456@localhost:5432/viewset_and_generic_db
-        run: |
-          python manage.py test
+          sudo systemctl restart gunicorn
+          sudo systemctl restart nginx
