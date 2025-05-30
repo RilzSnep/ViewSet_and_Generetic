@@ -17,8 +17,8 @@ jobs:
         image: postgres:13
         env:
           POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: password
-          POSTGRES_DB: test_db
+          POSTGRES_PASSWORD: 123456
+          POSTGRES_DB: viewset_and_generic_db
         ports:
           - 5432:5432
         options: >-
