@@ -43,7 +43,7 @@ urlpatterns = [
     path('api/register/', UserRegisterAPIView.as_view(), name='user_register'),
     path('api/users/<int:pk>/', UserDetailAPIView.as_view(), name='user_detail'),
     path('api/subscription/', SubscriptionToggleAPIView.as_view(), name='subscription_toggle'),
-    path('api/', include(router.urls)),
+    path('api/', include('lms.urls')),
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
     path('api/payment/create/', CreatePaymentAPIView.as_view(), name='create_payment'),
