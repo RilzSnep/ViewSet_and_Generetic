@@ -1,4 +1,6 @@
 from django.shortcuts import get_object_or_404
+from rest_framework.decorators import api_view
+from django.contrib.auth import get_user_model
 from rest_framework import viewsets, generics, status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -11,7 +13,18 @@ from .services import create_stripe_price, create_stripe_product, create_stripe_
 import logging
 from .tasks import debug_task, send_course_update_email
 
+User = get_user_model()
 logger = logging.getLogger(__name__)
+
+@api_view(['POST'])
+def subscription_toggle(request, pk):
+    user = request.user
+    course = Course.objects.get(id=pk)
+    subscription, created = Subscription.objects.get_or_create(user=user, course=course)
+    if not created:
+        subscription.delete()
+        return Response({"message": "Subscription removed"}, status=status.HTTP_200_OK)
+    return Response({"message": "Subscription created"}, status=status.HTTP_201_CREATED)
 
 class SubscriptionToggleAPIView(APIView):
     permission_classes = [IsAuthenticated]
@@ -75,19 +88,19 @@ class LessonViewSet(viewsets.ModelViewSet):
     def get_permissions(self):
         if self.action in ['create']:
             self.permission_classes = [IsAuthenticated, ~IsModerator]
-        elif self.action in ['destroy', 'update', 'partial_update', 'retrieve']:
+        elif self.action in ['destroy', 'update', 'partial_update']:
             self.permission_classes = [IsAuthenticated, IsOwnerOrModerator]
+        elif self.action in ['retrieve']:
+            self.permission_classes = [IsAuthenticated]
         else:
             self.permission_classes = [IsAuthenticated]
         return [permission() for permission in self.permission_classes]
-
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
 
     def perform_update(self, serializer):
         serializer.save(owner=self.request.user)
-
 
 class CreatePaymentAPIView(APIView):
     permission_classes = [IsAuthenticated]
