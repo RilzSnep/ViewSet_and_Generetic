@@ -1,1 +1,2 @@
 Django>=4.2,<5.0djangorestframework>=3.14psycopg2-binary==2.9.9python-decouple==3.8django-filter==23.5djangorestframework-simplejwt==5.3.1drf-yasg==1.21.7django-celery-beat==2.5.0celery==5.3.6redis==5.0.1dj-database-url==2.1.0dotenv
+pkg_resources
