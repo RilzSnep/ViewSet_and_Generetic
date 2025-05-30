@@ -3,20 +3,17 @@ from django.http import HttpResponse
 from django.urls import path, include
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from rest_framework.routers import DefaultRouter
-from lms.views import CourseViewSet, LessonViewSet, SubscriptionToggleAPIView, CreatePaymentAPIView, SubscriptionView,CheckPaymentStatusAPIView
+from lms.views import SubscriptionToggleAPIView, CreatePaymentAPIView, SubscriptionView, CheckPaymentStatusAPIView
 from users.views import UserViewSet, UserRegisterAPIView, UserDetailAPIView
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 from rest_framework import permissions
 
-
 def success_view(request):
     return HttpResponse("Оплата успешно завершена!")
 
-
 def cancel_view(request):
     return HttpResponse("Оплата отменена.")
-
 
 schema_view = get_schema_view(
     openapi.Info(
@@ -33,8 +30,6 @@ schema_view = get_schema_view(
 
 router = DefaultRouter()
 router.register(r'users', UserViewSet)
-router.register(r'courses', CourseViewSet)
-router.register(r'lessons', LessonViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),

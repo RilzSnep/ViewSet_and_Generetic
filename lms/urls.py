@@ -8,7 +8,7 @@ router.register(r'courses', CourseViewSet)
 router.register(r'lessons', LessonViewSet)
 
 urlpatterns = [
-    path('', include(router.urls)),  # Убрали "api/" для избежания дублирования
+    path('', include(router.urls)),
     path('subscription/', SubscriptionToggleAPIView.as_view(), name='subscription_toggle'),
     path('subscription/<int:pk>/toggle/', subscription_toggle, name='subscription-toggle'),
 ]
