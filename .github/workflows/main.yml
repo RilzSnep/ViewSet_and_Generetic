@@ -34,7 +34,10 @@ jobs:
         sudo systemctl start postgresql.service
         sudo -u postgres psql -c "CREATE DATABASE viewset_and_generic_db;"
         sudo -u postgres psql -c "CREATE USER runner WITH PASSWORD 'password';"
-        sudo -u postgres psql -c "GRANT ALL PRIVILEGES ON DATABASE viewset_and_generic_db TO runner;"
+        sudo -u postgres psql -c "ALTER DATABASE viewset_and_generic_db OWNER TO runner;"
+        sudo -u postgres psql -d viewset_and_generic_db -c "GRANT ALL PRIVILEGES ON SCHEMA public TO runner;"
+        sudo -u postgres psql -d viewset_and_generic_db -c "GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO runner;"
+        sudo -u postgres psql -d viewset_and_generic_db -c "ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON TABLES TO runner;"
 
     - name: Run migrations
       run: |
