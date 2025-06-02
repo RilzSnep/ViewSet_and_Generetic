@@ -58,7 +58,7 @@ jobs:
     - name: Deploy to Server
       uses: appleboy/ssh-action@master
       with:
-        host: 158.160.182.94
+        host: 158.160.184.103
         username: rilzsnep
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         port: 22
